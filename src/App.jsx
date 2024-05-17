@@ -12,13 +12,15 @@ function App() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8000/api/users/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(res);
+      const res = await fetch(
+        `http://localhost:8000/api/users/${existingUsername}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!res.ok) {
         throw new Error("User does not exist");
       } else {
