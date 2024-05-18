@@ -1,10 +1,4 @@
-let users = [
-  {
-    email: "email@email.com",
-    username: "Dylan",
-    password: "password123",
-  },
-];
+let users = [];
 
 const getUser = (req, res, next) => {
   const username = req.params.username;

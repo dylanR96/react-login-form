@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100svw;
+  height: 100svh;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+}

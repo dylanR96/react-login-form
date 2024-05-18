@@ -13,7 +13,7 @@ function App() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `http://localhost:8000/api/users/${existingUsername}`,
+        `http://localhost:8000/api/users/login/${existingUsername}`,
         {
           method: "GET",
           headers: {
@@ -34,7 +34,7 @@ function App() {
   const signUp = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8000/api/users/", {
+      const res = await fetch("http://localhost:8000/api/users/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,75 +57,77 @@ function App() {
 
   return (
     <>
-      <div>
-        <h1>Login</h1>
-        <form id="loginForm" onSubmit={login}>
-          <label for="email">Email</label>
-          <br />
-          <input
-            id="email"
-            type="text"
-            name="email"
-            value={existingEmail}
-            onChange={(e) => setExistingEmail(e.target.value)}
-          />
-          <br />
-          <label for="username">Username</label>
-          <br />
-          <input
-            id="username"
-            type="text"
-            name="username"
-            value={existingUsername}
-            onChange={(e) => setExistingUsername(e.target.value)}
-          />
-          <br />
-          <label for="password">Password</label>
-          <br />
-          <input
-            id="password"
-            type="text"
-            name="password"
-            value={existingPassword}
-            onChange={(e) => setExistingPassword(e.target.value)}
-          />
-          <br />
-          <button type="submit">Login</button>
-        </form>
-        <h1>Sign up</h1>
-        <form id="signUpForm" onSubmit={signUp}>
-          <label for="newEmail">Email</label>
-          <br />
-          <input
-            id="newEmail"
-            type="text"
-            name="newEmail"
-            value={newEmail}
-            onChange={(e) => setNewEmail(e.target.value)}
-          />
-          <br />
-          <label for="newUsername">Username</label>
-          <br />
-          <input
-            id="newUsername"
-            type="text"
-            name="newUsername"
-            value={newUsername}
-            onChange={(e) => setNewUsername(e.target.value)}
-          />
-          <br />
-          <label for="newPassword">Password</label>
-          <br />
-          <input
-            id="newPassword"
-            type="text"
-            name="newPassword"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-          <br />
-          <button type="submit">Sign up</button>
-        </form>
+      <div className="main">
+        <div className="forms">
+          <h1>Login</h1>
+          <form id="loginForm" onSubmit={login} className="forms">
+            <label for="email">Email</label>
+
+            <input
+              id="email"
+              type="text"
+              name="email"
+              value={existingEmail}
+              onChange={(e) => setExistingEmail(e.target.value)}
+            />
+
+            <label for="username">Username</label>
+
+            <input
+              id="username"
+              type="text"
+              name="username"
+              value={existingUsername}
+              onChange={(e) => setExistingUsername(e.target.value)}
+            />
+
+            <label for="password">Password</label>
+
+            <input
+              id="password"
+              type="text"
+              name="password"
+              value={existingPassword}
+              onChange={(e) => setExistingPassword(e.target.value)}
+            />
+
+            <button type="submit">Login</button>
+          </form>
+          <h1>Sign up</h1>
+          <form id="signUpForm" onSubmit={signUp} className="forms">
+            <label for="newEmail">Email</label>
+
+            <input
+              id="newEmail"
+              type="text"
+              name="newEmail"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
+            />
+
+            <label for="newUsername">Username</label>
+
+            <input
+              id="newUsername"
+              type="text"
+              name="newUsername"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
+
+            <label for="newPassword">Password</label>
+
+            <input
+              id="newPassword"
+              type="text"
+              name="newPassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+
+            <button type="submit">Sign up</button>
+          </form>
+        </div>
       </div>
     </>
   );

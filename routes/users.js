@@ -4,8 +4,8 @@ const router = express();
 
 router.get("/", getUsers);
 
-router.get("/:username", getUser);
+router.get("/login/:username", getUser);
 
-router.post("/", newUser);
+router.post("/signup", newUser);
 
 export default router;
