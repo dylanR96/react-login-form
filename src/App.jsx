@@ -1,4 +1,5 @@
 import "./App.css";
+import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 function App() {
   const [newEmail, setNewEmail] = useState("");
@@ -9,22 +10,30 @@ function App() {
   const [existingUsername, setExistingUsername] = useState("");
   const [existingPassword, setExistingPassword] = useState("");
 
+  const notifySuccessLogin = () => toast("Login successful.");
+  const notifyFail = () => toast("Email or user does not exist.");
+
+  const notifySuccessSignup = () => toast("Sign up successful!");
+
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        `http://localhost:8000/api/users/login/${existingUsername}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`http://localhost:8000/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: newEmail,
+          username: newUsername,
+          password: newPassword,
+        }),
+      });
       if (!res.ok) {
+        notifyFail();
         throw new Error("User does not exist");
       } else {
-        console.log("success!");
+        notifySuccessLogin();
       }
     } catch (error) {
       console.error("Error finding user");
@@ -48,7 +57,7 @@ function App() {
       if (!res.ok) {
         throw new Error("Failed to add new user");
       } else {
-        console.log("success!");
+        notifySuccessSignup();
       }
     } catch (error) {
       console.error("Error adding user");
@@ -59,9 +68,10 @@ function App() {
     <>
       <div className="main">
         <div className="forms">
+          <Toaster />
           <h1>Login</h1>
           <form id="loginForm" onSubmit={login} className="forms">
-            <label for="email">Email</label>
+            <label>Email</label>
 
             <input
               id="email"
@@ -71,7 +81,7 @@ function App() {
               onChange={(e) => setExistingEmail(e.target.value)}
             />
 
-            <label for="username">Username</label>
+            <label>Username</label>
 
             <input
               id="username"
@@ -81,7 +91,7 @@ function App() {
               onChange={(e) => setExistingUsername(e.target.value)}
             />
 
-            <label for="password">Password</label>
+            <label>Password</label>
 
             <input
               id="password"
@@ -95,7 +105,7 @@ function App() {
           </form>
           <h1>Sign up</h1>
           <form id="signUpForm" onSubmit={signUp} className="forms">
-            <label for="newEmail">Email</label>
+            <label>Email</label>
 
             <input
               id="newEmail"
@@ -105,7 +115,7 @@ function App() {
               onChange={(e) => setNewEmail(e.target.value)}
             />
 
-            <label for="newUsername">Username</label>
+            <label>Username</label>
 
             <input
               id="newUsername"
@@ -115,7 +125,7 @@ function App() {
               onChange={(e) => setNewUsername(e.target.value)}
             />
 
-            <label for="newPassword">Password</label>
+            <label>Password</label>
 
             <input
               id="newPassword"

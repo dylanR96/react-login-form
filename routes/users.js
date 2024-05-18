@@ -4,7 +4,7 @@ const router = express();
 
 router.get("/", getUsers);
 
-router.get("/login/:username", getUser);
+router.post("/login/", getUser);
 
 router.post("/signup", newUser);
 
