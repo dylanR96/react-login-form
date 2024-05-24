@@ -27,8 +27,6 @@ const getUser = (req, res, next) => {
   }
 
   database.findOne({ email, username, password }, (err, user) => {
-    // const userExists = users.some((user) => user.username === username);
-    // const emailExists = users.some((user) => user.email === email);
     if (err) {
       return res.status(500).send({ error: "Error finding user" });
     }
@@ -43,16 +41,12 @@ const getUser = (req, res, next) => {
 
 const newUser = (req, res, next) => {
   const { email, username, password } = req.body;
-  // const newUser = { email, username, password };
 
   if (!email || !username || !password) {
     const error = new Error(`You must add an email, username and password`);
     error.status = 400;
     return next(error);
   }
-  // const userExists = users.some((user) => user.username === username);
-  // const emailExists = users.some((user) => user.email === email);
-
   database.findOne({ $or: [{ email }, { username }] }, (err, existingUser) => {
     if (err) {
       return res.status(500).send({ error: "Error finding user" });
