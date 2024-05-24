@@ -1,4 +1,5 @@
 import database from "../db/database.js";
+import bcrypt from "bcrypt";
 
 // const getUser = (req, res, next) => {
 //   const username = req.params.username;
@@ -56,7 +57,11 @@ const newUser = (req, res, next) => {
       error.status = 409;
       return next(error);
     }
-    database.insert({ email, username, password }, (err, newUser) => {
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
+    database.insert({ email, username, hashedPassword }, (err, newUser) => {
       if (err) {
         return res.status(500).send({ error: "Error creating new user" });
       }
