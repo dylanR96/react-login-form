@@ -1,4 +1,4 @@
-let users = [];
+import database from "../db/database.js";
 
 // const getUser = (req, res, next) => {
 //   const username = req.params.username;
@@ -19,42 +19,56 @@ const getUsers = (req, res) => {
 
 const getUser = (req, res, next) => {
   const { email, username, password } = req.body;
-  const existingUser = { email, username, password };
 
-  if (!existingUser.email || !existingUser.username || !existingUser.password) {
+  if (!email || !username || !password) {
     const error = new Error(`You must add an email, username and password`);
     error.status = 400;
     return next(error);
   }
-  const userExists = users.some((user) => user.username === username);
-  const emailExists = users.some((user) => user.email === email);
-  if (!userExists || !emailExists) {
-    const error = new Error(`Email or username does not exist`);
-    error.status = 409;
-    return next(error);
-  }
-  res.status(201).json(users);
+
+  database.findOne({ email, username, password }, (err, user) => {
+    // const userExists = users.some((user) => user.username === username);
+    // const emailExists = users.some((user) => user.email === email);
+    if (err) {
+      return res.status(500).send({ error: "Error finding user" });
+    }
+    if (!user) {
+      const error = new Error(`Email or username does not exist`);
+      error.status = 404;
+      return next(error);
+    }
+    res.status(201).json(user);
+  });
 };
 
 const newUser = (req, res, next) => {
   const { email, username, password } = req.body;
-  const newUser = { email, username, password };
+  // const newUser = { email, username, password };
 
-  if (!newUser.email || !newUser.username || !newUser.password) {
+  if (!email || !username || !password) {
     const error = new Error(`You must add an email, username and password`);
     error.status = 400;
     return next(error);
   }
-  const userExists = users.some((user) => user.username === username);
-  const emailExists = users.some((user) => user.email === email);
-  if (userExists || emailExists) {
-    const error = new Error(`Email or username already exists`);
-    error.status = 409;
-    return next(error);
-  }
-  users.push(newUser);
-  console.log(req.body);
-  res.status(201).json(users);
+  // const userExists = users.some((user) => user.username === username);
+  // const emailExists = users.some((user) => user.email === email);
+
+  database.findOne({ $or: [{ email }, { username }] }, (err, existingUser) => {
+    if (err) {
+      return res.status(500).send({ error: "Error finding user" });
+    }
+    if (existingUser) {
+      const error = new Error(`Email or username already exists`);
+      error.status = 409;
+      return next(error);
+    }
+    database.insert({ email, username, password }, (err, newUser) => {
+      if (err) {
+        return res.status(500).send({ error: "Error creating new user" });
+      }
+      res.status(201).json(newUser);
+    });
+  });
 };
 
 export { getUser, getUsers, newUser };

@@ -1,6 +1,7 @@
 import "./App.css";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
+
 function App() {
   const [newEmail, setNewEmail] = useState("");
   const [newUsername, setNewUsername] = useState("");
@@ -12,7 +13,6 @@ function App() {
 
   const notifySuccessLogin = () => toast("Login successful.");
   const notifyFail = () => toast("Email or user does not exist.");
-
   const notifySuccessSignup = () => toast("Sign up successful!");
 
   const login = async (e) => {
@@ -24,9 +24,9 @@ function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: newEmail,
-          username: newUsername,
-          password: newPassword,
+          email: existingEmail,
+          username: existingUsername,
+          password: existingPassword,
         }),
       });
       if (!res.ok) {
@@ -36,7 +36,7 @@ function App() {
         notifySuccessLogin();
       }
     } catch (error) {
-      console.error("Error finding user");
+      console.error("Error finding user", error);
     }
   };
 
@@ -60,7 +60,7 @@ function App() {
         notifySuccessSignup();
       }
     } catch (error) {
-      console.error("Error adding user");
+      console.error("Error adding user", error);
     }
   };
 
