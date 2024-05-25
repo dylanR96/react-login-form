@@ -15,7 +15,12 @@ import bcrypt from "bcrypt";
 // };
 
 const getUsers = (req, res) => {
-  res.send(users);
+  database.find({}, (err, data) => {
+    if (err) {
+      return res.status(500).send({ error: "Error finding users" });
+    }
+    res.status(200).json(data);
+  });
 };
 
 const getUser = (req, res, next) => {
@@ -43,8 +48,6 @@ const getUser = (req, res, next) => {
       error.status = 401;
       return next(error);
     }
-
-    // If password is correct, return the user data
     res.status(200).json(user);
   });
 };

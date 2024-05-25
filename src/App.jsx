@@ -64,6 +64,27 @@ function App() {
     }
   };
 
+  const getUsers = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:8000/api/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw new Error("Failed to retrieve users");
+      } else {
+        const data = await res.json();
+        console.log(data);
+        notifySuccessSignup();
+      }
+    } catch (error) {
+      console.error("Error adding users", error);
+    }
+  };
+
   return (
     <>
       <div className="main">
@@ -137,6 +158,9 @@ function App() {
 
             <button type="submit">Sign up</button>
           </form>
+        </div>
+        <div>
+          <button onClick={getUsers}>Get users</button>
         </div>
       </div>
     </>
