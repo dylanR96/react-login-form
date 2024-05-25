@@ -75,7 +75,7 @@ function App() {
 
             <input
               id="email"
-              type="text"
+              type="email"
               name="email"
               value={existingEmail}
               onChange={(e) => setExistingEmail(e.target.value)}
@@ -95,7 +95,7 @@ function App() {
 
             <input
               id="password"
-              type="text"
+              type="password"
               name="password"
               value={existingPassword}
               onChange={(e) => setExistingPassword(e.target.value)}
@@ -109,7 +109,7 @@ function App() {
 
             <input
               id="newEmail"
-              type="text"
+              type="email"
               name="newEmail"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
@@ -129,7 +129,7 @@ function App() {
 
             <input
               id="newPassword"
-              type="text"
+              type="password"
               name="newPassword"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}

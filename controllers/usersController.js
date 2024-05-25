@@ -27,7 +27,7 @@ const getUser = (req, res, next) => {
     return next(error);
   }
 
-  database.findOne({ email, username, password }, (err, user) => {
+  database.findOne({ email, username }, (err, user) => {
     if (err) {
       return res.status(500).send({ error: "Error finding user" });
     }
@@ -36,7 +36,16 @@ const getUser = (req, res, next) => {
       error.status = 404;
       return next(error);
     }
-    res.status(201).json(user);
+    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+
+    if (!isPasswordCorrect) {
+      const error = new Error("Invalid password");
+      error.status = 401;
+      return next(error);
+    }
+
+    // If password is correct, return the user data
+    res.status(200).json(user);
   });
 };
 
@@ -61,12 +70,15 @@ const newUser = (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    database.insert({ email, username, hashedPassword }, (err, newUser) => {
-      if (err) {
-        return res.status(500).send({ error: "Error creating new user" });
+    database.insert(
+      { email, username, password: hashedPassword },
+      (err, newUser) => {
+        if (err) {
+          return res.status(500).send({ error: "Error creating new user" });
+        }
+        res.status(201).json(newUser);
       }
-      res.status(201).json(newUser);
-    });
+    );
   });
 };
 
