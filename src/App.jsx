@@ -81,11 +81,10 @@ function App() {
       if (!res.ok) {
         notifyFailUsers();
         throw new Error("Failed to retrieve users");
-      } else {
-        const data = await res.json();
-        console.log(data);
-        notifySuccessUsers();
       }
+      const data = await res.json();
+      console.log(data);
+      notifySuccessUsers();
     } catch (error) {
       console.error("Error adding users", error);
     }

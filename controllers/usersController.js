@@ -19,7 +19,8 @@ const getUsers = (req, res) => {
     if (err) {
       return res.status(500).send({ error: "Error finding users" });
     }
-    res.status(200).json(data);
+    const usernames = data.map((user) => user.username);
+    res.status(200).json(usernames);
   });
 };
 
