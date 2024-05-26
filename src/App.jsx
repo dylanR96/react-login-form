@@ -14,6 +14,10 @@ function App() {
   const notifySuccessLogin = () => toast("Login successful.");
   const notifyFail = () => toast("Email or user does not exist.");
   const notifySuccessSignup = () => toast("Sign up successful!");
+  const notifyFailSignup = () => toast("User was not created");
+
+  const notifySuccessUsers = () => toast("Users retrieved");
+  const notifyFailUsers = () => toast("Unable to retrieve users!");
 
   const login = async (e) => {
     e.preventDefault();
@@ -55,6 +59,7 @@ function App() {
         }),
       });
       if (!res.ok) {
+        notifyFailSignup();
         throw new Error("Failed to add new user");
       } else {
         notifySuccessSignup();
@@ -74,11 +79,12 @@ function App() {
         },
       });
       if (!res.ok) {
+        notifyFailUsers();
         throw new Error("Failed to retrieve users");
       } else {
         const data = await res.json();
         console.log(data);
-        notifySuccessSignup();
+        notifySuccessUsers();
       }
     } catch (error) {
       console.error("Error adding users", error);
