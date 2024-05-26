@@ -11,6 +11,8 @@ function App() {
   const [existingUsername, setExistingUsername] = useState("");
   const [existingPassword, setExistingPassword] = useState("");
 
+  const [users, setUsers] = useState([]);
+
   const notifySuccessLogin = () => toast("Login successful.");
   const notifyFail = () => toast("Email or user does not exist.");
   const notifySuccessSignup = () => toast("Sign up successful!");
@@ -83,7 +85,7 @@ function App() {
         throw new Error("Failed to retrieve users");
       }
       const data = await res.json();
-      console.log(data);
+      setUsers(data);
       notifySuccessUsers();
     } catch (error) {
       console.error("Error adding users", error);
@@ -166,6 +168,14 @@ function App() {
         </div>
         <div>
           <button onClick={getUsers}>Get users</button>
+          <div>
+            <h2>Users</h2>
+            <ul>
+              {users.map((user, index) => (
+                <li key={index}>{user}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </>
