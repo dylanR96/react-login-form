@@ -2,8 +2,10 @@ import React from "react";
 import "../App.css";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [newEmail, setNewEmail] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -30,6 +32,7 @@ const SignUp = () => {
         throw new Error("Failed to add new user");
       } else {
         notifySuccessSignup();
+        navigate("/");
       }
     } catch (error) {
       console.error("Error adding user", error);
