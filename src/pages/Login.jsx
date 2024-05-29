@@ -80,7 +80,7 @@ const Login = () => {
             <button type="submit">Login</button>
           </form>
         </div>
-        <Buttons />
+        <Buttons onClick={() => navigate("/signUp")} label={"Sign up"} />
       </div>
     </>
   );

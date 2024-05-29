@@ -1,11 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-const Buttons = () => {
-  const navigate = useNavigate();
+const Buttons = ({ onClick, label }) => {
   return (
     <>
-      <button onClick={() => navigate("/signUp")}>Sign up</button>
+      <button onClick={onClick}>{label}</button>
     </>
   );
 };
