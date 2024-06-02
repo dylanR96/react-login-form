@@ -1,19 +1,6 @@
 import database from "../db/database.js";
 import bcrypt from "bcrypt";
 
-// const getUser = (req, res, next) => {
-//   const username = req.params.username;
-//   const email = req.params.email;
-//   // res.json(users.filter((user) => user.username === username));
-//   const user = users.find((user) => user.username === username);
-//   if (!user) {
-//     const error = new Error(`A user with username ${user} was not found`);
-//     error.status = 404;
-//     return next(error);
-//   }
-//   res.status(200).json(user);
-// };
-
 const getUsers = (req, res) => {
   database.find({}, (err, data) => {
     if (err) {
@@ -86,4 +73,6 @@ const newUser = (req, res, next) => {
   });
 };
 
-export { getUser, getUsers, newUser };
+const deleteUser = () => {};
+
+export { getUser, getUsers, newUser, deleteUser };
