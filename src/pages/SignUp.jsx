@@ -3,6 +3,7 @@ import "../App.css";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Buttons from "../components/Buttons";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -80,6 +81,7 @@ const SignUp = () => {
             <button type="submit">Sign up</button>
           </form>
         </div>
+        <Buttons label={"Go back"} onClick={() => navigate("/")} />
       </div>
     </>
   );
